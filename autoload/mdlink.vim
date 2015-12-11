@@ -16,9 +16,8 @@ function! mdlink#make_markdown_link_with_title()
   let url = @r
   call s:check_url(url)
   let title = s:get_title(url)
-  execute 'normal viud'
   let @r = "[".title."](".url.")"
-  execute 'normal "rP'
+  execute 'normal viu"rP'
   let @r = reg
 endfunction
 
