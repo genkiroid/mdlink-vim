@@ -9,8 +9,13 @@ let s:ghe_options = ['ghe_api_url', 'ghe_token', 'ghe_url']
 let s:has_ghe_options = 0
 
 function! mdlink#make_markdown_link_with_title()
+  call s:convert()
+endfunction
+
+function! s:convert()
   call s:check_options()
   call s:format_url()
+  call s:cursor_to_url()
   let reg = @r
   execute 'normal "ryiu'
   let url = @r
@@ -43,6 +48,18 @@ function! s:format_url()
   endif
 endfunction
 
+function! s:cursor_to_url() range
+  let reg = @r
+  execute 'normal "ryiu'
+  let url = @r
+  if url != ''
+    let @r = reg
+    return
+  endif
+  let l:colpos = match(getline('.'), '\(https\?\)')
+  call cursor(line('.'), l:colpos + 1)
+endfunction
+
 function! s:append_trailing_slash(url)
   if a:url !~? '/$'
     return a:url.'/'
@@ -66,7 +83,7 @@ function! s:get_issue_title(url)
     let title = issue.title
     return issue.title
   catch
-    echo "support only issue or pull if on private repo."
+    echo "It support only issue or pull if on private repo."
     return a:url
   endtry
 endfunction
@@ -78,7 +95,7 @@ function! s:get_page_title(url)
     let title = dom.childNode('head').childNode('title').value()
     return title
   catch
-    echo "title node is not exists or on irregular position."
+    echo "Title node is not exists or it's on irregular position."
     return a:url
   endtry
 endfunction
