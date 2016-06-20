@@ -21,7 +21,8 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-command! MarkdownLink call mdlink#make_markdown_link_with_title()
+command! MarkdownLinkOnlyOnCursor call mdlink#make_markdown_link_with_title()
+command! -range MarkdownLink <line1>,<line2>%call mdlink#make_markdown_link_with_title()
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

@@ -33,8 +33,23 @@ let g:mdlink_vim = {
 
 ## Usage
 
- 1. Put the cursor on the URL.
+### MarkdownLink
+
+ 1. Put the cursor on the row existing URL. Or select multi rows by visual mode.
  1. Enter command `:MarkdownLink`.
+
+### MarkdownLinkOnlyOnCursor
+
+ 1. Put the cursor on the URL.
+ 1. Enter command `:MarkdownLinkOnlyOnCursor`.
+
+### Map example
+
+```
+nnoremap <silent> ml :MarkdownLink<CR>
+vnoremap <silent> ml :MarkdownLink<CR>
+nnoremap <silent> mo :MarkdownLinkOnlyOnCursor<CR>
+```
 
 ## License
 
