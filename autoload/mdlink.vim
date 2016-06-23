@@ -8,22 +8,12 @@ let s:is_ghe = 0
 let s:ghe_options = ['ghe_api_url', 'ghe_token', 'ghe_url']
 let s:has_ghe_options = 0
 
-function! mdlink#make_markdown_link_with_title()
-  call s:convert()
-endfunction
-
-function! s:convert()
+function! mdlink#make_markdown_link_with_title() range
   call s:check_options()
   call s:format_url()
-  call s:cursor_to_url()
-  let reg = @r
-  execute 'normal "ryiu'
-  let url = @r
-  call s:check_url(url)
-  let title = s:get_title(url)
-  let @r = "[".title."](".url.")"
-  execute 'normal viu"rP'
-  let @r = reg
+  for n in range(a:firstline, a:lastline)
+    call s:cursor_to_url(n)
+  endfor
 endfunction
 
 function! s:check_options()
@@ -48,16 +38,35 @@ function! s:format_url()
   endif
 endfunction
 
-function! s:cursor_to_url() range
+function! s:cursor_to_url(n)
   let reg = @r
   execute 'normal "ryiu'
   let url = @r
   if url != ''
     let @r = reg
+    call s:to_markdown()
     return
   endif
-  let l:colpos = match(getline('.'), '\(https\?\)')
-  call cursor(line('.'), l:colpos + 1)
+
+  let l:colpos = match(getline(a:n), '\([^(]https\?\)', 0)
+
+  while l:colpos != -1
+    call cursor(a:n, l:colpos + 1)
+    call s:to_markdown()
+    let l:colpos = match(getline(a:n), '\([^(]https\?\)', 0)
+  endwhile
+
+endfunction
+
+function! s:to_markdown()
+    let reg = @r
+    execute 'normal "ryiu'
+    let url = @r
+    call s:check_url(url)
+    let title = s:get_title(url)
+    let @r = "[".title."](".url.")"
+    execute 'normal viu"rP'
+    let @r = reg
 endfunction
 
 function! s:append_trailing_slash(url)

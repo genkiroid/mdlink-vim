@@ -43,6 +43,10 @@ let g:mdlink_vim = {
  1. Put the cursor on the URL.
  1. Enter command `:MarkdownLinkOnlyOnCursor`.
 
+### Convert all URL
+
+ 1. Enter command `:%Markdownlink`.
+
 ### Map example
 
 ```
