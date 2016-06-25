@@ -1,0 +1,75 @@
+*mdlink.txt*  Plugin for convert url to markdown format
+
+Author: Genki Uchimura <gamurai@gmail.com>
+License: MIT
+
+==============================================================================
+CONTENTS				*mdlink*
+
+USAGE					|mdlink-usage|
+INSTALL					|mdlink-install|
+SETUP					|mdlink-setup|
+MAP					|mdlink-map|
+REQUIREMENTS				|mdlink-requirements|
+
+==============================================================================
+USAGE					*mdlink-usage*
+
+- Convert all url exist on current row. Also visual mode. >
+
+	:Markdownlink
+<
+- Convert all url exist on current window. >
+
+	:%Markdownlink
+<
+- Convert an url exists on cursor. >
+
+	:MarkdownlinkOnlyOnCursor
+<
+==============================================================================
+INSTALL					*mdlink-install*
+
+Use plugin manager you like. Or check out into your plugin directory.
+
+==============================================================================
+SETUP					*mdlink-setup*
+
+For enable to convert url of Github and GHE private repos. ~
+
+- Github
+	Create $HOME/.mdlink-vim file as below. >
+
+	let g:mdlink_vim = {
+	\  'github_token': 'your personal token'
+	\}
+<
+- GHE
+	Append setting to $HOME/.mdlink-vim file as below. >
+
+	let g:mdlink_vim = {
+	\  'github_token': 'your personal token',
+	\  'ghe_url':      'https://ghe.domain.name/',
+	\  'ghe_api_url':  'https://ghe.domain.name/api/v3/repos/',
+	\  'ghe_token':    'your personal token'
+	\}
+<
+==============================================================================
+MAP					*mdlink-map*
+
+For example.
+>
+	nnoremap <silent> ml :Markdownlink<CR>
+	vnoremap <silent> ml :Markdownlink<CR>
+	nnoremap <silent> mo :MarkdownlinkOnlyOnCursor<CR>
+<
+==============================================================================
+REQUIREMENTS				*mdlink-requirements*
+
+Require the following great vim plugins.
+
+ - webapi-vim (https://github.com/mattn/webapi-vim)
+ - vim-textobj-user (https://github.com/kana/vim-textobj-user)
+ - vim-textobj-url (https://github.com/mattn/vim-textobj-url)
+
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
