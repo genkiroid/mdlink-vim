@@ -63,15 +63,19 @@ function! s:format_url()
 endfunction
 
 function! s:cursor_to_url(n)
-  let l:colpos = match(getline(a:n), '\([^(]https\?\)', 0)
+  let l:colpos = s:get_url_col_position(a:n)
 
   while l:colpos != -1
     call cursor(a:n, l:colpos + 1)
     let url = s:get_url()
     call s:to_markdown(url)
-    let l:colpos = match(getline(a:n), '\([^(]https\?\)', 0)
+    let l:colpos = s:get_url_col_position(a:n)
   endwhile
 
+endfunction
+
+function! s:get_url_col_position(n)
+  return match(getline(a:n), '\([^(]https\?\)', 0)
 endfunction
 
 function! s:to_markdown(url)
