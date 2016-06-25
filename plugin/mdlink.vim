@@ -1,3 +1,6 @@
+" File: mdlink.vim
+" Author: Genki Uchimura <gamurai@gmail.com>
+" Description: vim plugin for convert url to markdown format.
 if exists("g:loaded_mdlink")
   finish
 endif
