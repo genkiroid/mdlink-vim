@@ -2,6 +2,10 @@
 
 URL to Markdown link with title. Support issue and p/r title on Github/GHE private repo.
 
+## Demo
+
+![demo](https://github.com/genkiroid/mdlink-vim/wiki/images/demo.gif)
+
 ## Install
 
 Checkout into your plugin directory, or Use plugin manager.
