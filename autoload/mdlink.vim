@@ -75,7 +75,7 @@ function! s:cursor_to_url(n)
 endfunction
 
 function! s:get_url_col_position(n)
-  return match(getline(a:n), '\([^(]https\?\)', 0)
+  return match(getline(a:n), '\([^([]https\?\)', 0)
 endfunction
 
 function! s:to_markdown(url)
