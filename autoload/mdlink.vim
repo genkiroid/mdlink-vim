@@ -11,12 +11,10 @@ let s:has_ghe_options = 0
 function! mdlink#make_markdown_link_with_title(onlyoncursor) range
   call s:check_options()
   call s:format_url()
-  let ret = s:is_cursol_on_url()
-  if ret
-    call s:to_markdown(s:get_url())
-    return
-  endif
   if a:onlyoncursor
+    if s:is_cursol_on_url()
+      call s:to_markdown(s:get_url())
+    endif
     return
   endif
   for n in range(a:firstline, a:lastline)
@@ -66,7 +64,7 @@ function! s:cursor_to_url(n)
   let l:colpos = s:get_url_col_position(a:n)
 
   while l:colpos != -1
-    call cursor(a:n, l:colpos + 1)
+    call cursor(a:n, l:colpos)
     let url = s:get_url()
     call s:to_markdown(url)
     let l:colpos = s:get_url_col_position(a:n)
@@ -75,7 +73,11 @@ function! s:cursor_to_url(n)
 endfunction
 
 function! s:get_url_col_position(n)
-  return match(getline(a:n), '\([^([]https\?\)', 0)
+  let l:pos = match(getline(a:n), '\v([^([]|^)https?', 0)
+  if l:pos > 0
+    let l:pos += 1
+  endif
+  return l:pos
 endfunction
 
 function! s:to_markdown(url)
